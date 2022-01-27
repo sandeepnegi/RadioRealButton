@@ -77,8 +77,13 @@ public class RoundedCornerLayout extends FrameLayout {
 
         final Path path = new Path();
         path.addRoundRect(new RectF(0, 0, canvas.getWidth(), canvas.getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
-        canvas.clipPath(path, Region.Op.REPLACE);
-        canvas.clipPath(path);
+       // canvas.clipPath(path, Region.Op.REPLACE);
+      //  canvas.clipPath(path);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            canvas.clipOutPath(path);
+        } else {
+            canvas.clipPath(path, Region.Op.REPLACE);
+        }
 
         super.dispatchDraw(canvas);
 
